@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, motionValue } from "framer-motion";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
@@ -55,8 +55,29 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-size: cover;
   background-position: center center;
   height: 200px;
-  color: red;
+  color: white;
   font-size: 66px;
+  cursor: pointer;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
+`;
+
+const Info = styled(motion.div)`
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+
+  h4 {
+    text-align: center;
+    font-size: 20px;
+  }
 `;
 
 const rowVariants = {
@@ -68,6 +89,24 @@ const rowVariants = {
   },
   exit: {
     x: -window.outerWidth - 5,
+  },
+};
+
+const boxvariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    y: -50,
+    scale: 1.3,
+    transition: { delay: 0.2, duration: 0.5, type: "tween" },
+  },
+};
+
+const infoVariant = {
+  hover: {
+    opacity: 1,
+    transition: { delay: 0.2, duration: 0.5, type: "tween" },
   },
 };
 
@@ -119,8 +158,16 @@ function Home() {
                   .map((movie) => (
                     <Box
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                      variants={boxvariants}
+                      initial="normal"
+                      whileHover="hover"
+                      transition={{ type: "tween" }}
                       key={movie.id}
-                    ></Box>
+                    >
+                      <Info variants={infoVariant}>
+                        <h4>{movie.title}</h4>
+                      </Info>
+                    </Box>
                   ))}
               </Row>
             </AnimatePresence>
