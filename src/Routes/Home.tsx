@@ -1,7 +1,12 @@
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getMovies, IGetMoviesResult } from "../api";
+import {
+  getMovies,
+  getPopularMovies,
+  getRatedMovies,
+  IGetMoviesResult,
+} from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
@@ -17,11 +22,10 @@ const Loader = styled.div`
 `;
 
 const Banner = styled.div<{ bgPhoto: string }>`
-  height: 100vh;
+  height: 150vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 60px;
+  padding: 120px;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgPhoto});
   background-size: cover;
@@ -42,9 +46,19 @@ const Slider1 = styled.div`
   top: -100px;
 `;
 
+const SliderTitle = styled.h4`
+  font-size: 18px;
+  padding: 10px 5px;
+`;
+
 const Slider2 = styled.div`
   position: relative;
-  top: -350px;
+  top: -330px;
+`;
+
+const Slider3 = styled.div`
+  position: relative;
+  top: -560px;
 `;
 
 const Row = styled(motion.div)`
@@ -169,18 +183,48 @@ function Home() {
     ["movies", "nowPlaying"],
     getMovies
   );
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
-  const increaseIndex = () => {
+  const { isLoading: isLoading2, data: popularData } =
+    useQuery<IGetMoviesResult>(["movies", "popular"], getPopularMovies);
+  const { isLoading: isLoading3, data: ratedData } = useQuery<IGetMoviesResult>(
+    ["movies", "coming"],
+    getRatedMovies
+  );
+  const [index1, setIndex1] = useState(0);
+  const [index2, setIndex2] = useState(0);
+  const [index3, setIndex3] = useState(0);
+  const [leaving1, setLeaving1] = useState(false);
+  const [leaving2, setLeaving2] = useState(false);
+  const [leaving3, setLeaving3] = useState(false);
+  const increaseIndex1 = () => {
     if (data) {
-      if (leaving) return;
-      toggleLeaving();
+      if (leaving1) return;
+      toggleLeaving1();
       const total = data.results.length - 1;
       const maxIndex = Math.floor(total / number) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+      setIndex1((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
   };
-  const toggleLeaving = () => setLeaving((prev) => !prev);
+  const increaseIndex2 = () => {
+    if (popularData) {
+      if (leaving2) return;
+      toggleLeaving2();
+      const total = popularData.results.length - 1;
+      const maxIndex = Math.floor(total / number) - 1;
+      setIndex2((prev) => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
+  const increaseIndex3 = () => {
+    if (ratedData) {
+      if (leaving3) return;
+      toggleLeaving3();
+      const total = ratedData.results.length - 1;
+      const maxIndex = Math.floor(total / number) - 1;
+      setIndex3((prev) => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
+  const toggleLeaving1 = () => setLeaving1((prev) => !prev);
+  const toggleLeaving2 = () => setLeaving2((prev) => !prev);
+  const toggleLeaving3 = () => setLeaving3((prev) => !prev);
   const onBoxClick = (movieId: number) => {
     navigate(`/movies/${movieId}`);
   };
@@ -192,33 +236,30 @@ function Home() {
     data?.results.find(
       (movie) => String(movie.id) === movieMatch.params.movieId
     );
-  console.log(clickedMovie);
   return (
     <Wrapper>
       {isLoading ? (
         <Loader></Loader>
       ) : (
         <>
-          <Banner
-            onClick={increaseIndex}
-            bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
-          >
+          <Banner bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}>
             <Title>{data?.results[0].title}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
-          {/* <Slider2>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+          <Slider3 onClick={increaseIndex3}>
+            <SliderTitle>Top Rated</SliderTitle>
+            <AnimatePresence initial={false} onExitComplete={toggleLeaving3}>
               <Row
                 variants={rowVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 transition={{ type: "tween", duration: 1 }}
-                key={index}
+                key={index3}
               >
-                {data?.results
+                {ratedData?.results
                   .slice(1)
-                  .slice(number * index, number * index + number)
+                  .slice(number * index3, number * index3 + number)
                   .map((movie) => (
                     <Box
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
@@ -237,20 +278,54 @@ function Home() {
                   ))}
               </Row>
             </AnimatePresence>
-          </Slider2> */}
-          <Slider1>
-            <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+          </Slider3>
+          <Slider2 onClick={increaseIndex2}>
+            <SliderTitle>Popular</SliderTitle>
+            <AnimatePresence initial={false} onExitComplete={toggleLeaving2}>
               <Row
                 variants={rowVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
                 transition={{ type: "tween", duration: 1 }}
-                key={index}
+                key={index2}
+              >
+                {popularData?.results
+                  .slice(1)
+                  .slice(number * index2, number * index2 + number)
+                  .map((movie) => (
+                    <Box
+                      bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                      variants={boxvariants}
+                      initial="normal"
+                      whileHover="hover"
+                      transition={{ type: "tween" }}
+                      layoutId={movie.id + ""}
+                      key={movie.id}
+                      onClick={() => onBoxClick(movie.id)}
+                    >
+                      <Info variants={infoVariant}>
+                        <h4>{movie.title}</h4>
+                      </Info>
+                    </Box>
+                  ))}
+              </Row>
+            </AnimatePresence>
+          </Slider2>
+          <Slider1 onClick={increaseIndex1}>
+            <SliderTitle>Now Playing</SliderTitle>
+            <AnimatePresence initial={false} onExitComplete={toggleLeaving1}>
+              <Row
+                variants={rowVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ type: "tween", duration: 1 }}
+                key={index1}
               >
                 {data?.results
                   .slice(1)
-                  .slice(number * index, number * index + number)
+                  .slice(number * index1, number * index1 + number)
                   .map((movie) => (
                     <Box
                       bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
