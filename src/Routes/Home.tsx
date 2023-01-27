@@ -48,6 +48,7 @@ const Slider1 = styled.div`
 
 const SliderTitle = styled.h4`
   font-size: 18px;
+  font-weight: bold;
   padding: 10px 5px;
 `;
 
@@ -130,16 +131,33 @@ const BigCover = styled.div`
 
 const BigTitle = styled.h3`
   position: relative;
-  top: -80px;
+  top: -60px;
   color: ${(props) => props.theme.white.lighter};
-  font-size: 48px;
+  font-size: 32px;
   padding: 20px;
 `;
 
 const BigOverview = styled.p`
   position: relative;
+  top: -100px;
+  color: ${(props) => props.theme.white.lighter};
+  font-size: 16px;
+  padding: 20px;
+`;
+
+const Bigdate = styled.p`
+  position: relative;
   top: -80px;
   color: ${(props) => props.theme.white.lighter};
+  font-size: 20px;
+  padding: 20px;
+`;
+
+const Bigscore = styled.p`
+  position: relative;
+  top: -120px;
+  color: ${(props) => props.theme.white.lighter};
+  font-size: 16px;
   padding: 20px;
 `;
 
@@ -234,6 +252,16 @@ function Home() {
   const clickedMovie =
     movieMatch?.params.movieId &&
     data?.results.find(
+      (movie) => String(movie.id) === movieMatch.params.movieId
+    );
+  const clickedPopularMovie =
+    movieMatch?.params.movieId &&
+    popularData?.results.find(
+      (movie) => String(movie.id) === movieMatch.params.movieId
+    );
+  const clickedRatedMovie =
+    movieMatch?.params.movieId &&
+    ratedData?.results.find(
       (movie) => String(movie.id) === movieMatch.params.movieId
     );
   return (
@@ -368,7 +396,51 @@ function Home() {
                         }}
                       />
                       <BigTitle>{clickedMovie.title}</BigTitle>
+                      <Bigdate>
+                        Release Date : {clickedMovie?.release_date}
+                      </Bigdate>
                       <BigOverview>{clickedMovie.overview}</BigOverview>
+                      <Bigscore>Score : {clickedMovie?.vote_average}</Bigscore>
+                    </>
+                  )}
+                  {clickedPopularMovie && (
+                    <>
+                      <BigCover
+                        style={{
+                          backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
+                            clickedPopularMovie.backdrop_path,
+                            "w500"
+                          )})`,
+                        }}
+                      />
+                      <BigTitle>{clickedPopularMovie.title}</BigTitle>
+                      <Bigdate>
+                        Release Date : {clickedPopularMovie?.release_date}
+                      </Bigdate>
+                      <BigOverview>{clickedPopularMovie.overview}</BigOverview>
+                      <Bigscore>
+                        Score : {clickedPopularMovie?.vote_average}
+                      </Bigscore>
+                    </>
+                  )}
+                  {clickedRatedMovie && (
+                    <>
+                      <BigCover
+                        style={{
+                          backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
+                            clickedRatedMovie.backdrop_path,
+                            "w500"
+                          )})`,
+                        }}
+                      />
+                      <BigTitle>{clickedRatedMovie.title}</BigTitle>
+                      <Bigdate>
+                        Release Date : {clickedRatedMovie?.release_date}
+                      </Bigdate>
+                      <BigOverview>{clickedRatedMovie.overview}</BigOverview>
+                      <Bigscore>
+                        Score : {clickedRatedMovie?.vote_average}
+                      </Bigscore>
                     </>
                   )}
                 </Bigbox>
