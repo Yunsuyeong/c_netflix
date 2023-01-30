@@ -37,23 +37,30 @@ const Slider1 = styled.div`
   top: -400px;
 `;
 
-const SliderTitle = styled.h4`
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 5px;
-`;
-
 const Slider2 = styled.div`
   position: relative;
   top: -650px;
 `;
 
+const SliderCon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SliderTitle = styled.h4`
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 50px;
+`;
+
 const Row = styled(motion.div)`
   display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   position: absolute;
   width: 100%;
+  padding: 10px 100px;
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
@@ -243,8 +250,10 @@ function Search() {
       ) : (
         <>
           <Banner bgPhoto="" />
-          <Slider2 onClick={increaseIndex2}>
-            <SliderTitle>Tv</SliderTitle>
+          <Slider2>
+            <SliderCon onClick={increaseIndex2}>
+              <SliderTitle>Tv</SliderTitle>
+            </SliderCon>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving2}>
               <Row
                 variants={rowVariants}
@@ -276,8 +285,10 @@ function Search() {
               </Row>
             </AnimatePresence>
           </Slider2>
-          <Slider1 onClick={increaseIndex1}>
-            <SliderTitle>Movie</SliderTitle>
+          <Slider1>
+            <SliderCon onClick={increaseIndex1}>
+              <SliderTitle>Movie</SliderTitle>
+            </SliderCon>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving1}>
               <Row
                 variants={rowVariants}

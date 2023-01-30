@@ -41,12 +41,6 @@ const Slider1 = styled.div`
   top: -100px;
 `;
 
-const SliderTitle = styled.h4`
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 5px;
-`;
-
 const Slider2 = styled.div`
   position: relative;
   top: -330px;
@@ -55,6 +49,17 @@ const Slider2 = styled.div`
 const Slider3 = styled.div`
   position: relative;
   top: -560px;
+`;
+
+const SliderCon = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const SliderTitle = styled.h4`
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 5px;
 `;
 
 const Row = styled(motion.div)`
@@ -265,8 +270,10 @@ function Tv() {
             <Title>{data?.results[0].name}</Title>
             <Overview>{data?.results[0].overview}</Overview>
           </Banner>
-          <Slider3 onClick={increaseIndex3}>
-            <SliderTitle>Top Rated</SliderTitle>
+          <Slider3>
+            <SliderCon onClick={increaseIndex3}>
+              <SliderTitle>Top Rated</SliderTitle>
+            </SliderCon>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving3}>
               <Row
                 variants={rowVariants}
@@ -298,8 +305,10 @@ function Tv() {
               </Row>
             </AnimatePresence>
           </Slider3>
-          <Slider2 onClick={increaseIndex2}>
-            <SliderTitle>Popular</SliderTitle>
+          <Slider2>
+            <SliderCon onClick={increaseIndex2}>
+              <SliderTitle>Popular</SliderTitle>
+            </SliderCon>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving2}>
               <Row
                 variants={rowVariants}
@@ -331,8 +340,10 @@ function Tv() {
               </Row>
             </AnimatePresence>
           </Slider2>
-          <Slider1 onClick={increaseIndex1}>
-            <SliderTitle>Airing Today</SliderTitle>
+          <Slider1>
+            <SliderCon onClick={increaseIndex1}>
+              <SliderTitle>Airing Today</SliderTitle>
+            </SliderCon>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving1}>
               <Row
                 variants={rowVariants}

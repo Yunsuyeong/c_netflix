@@ -144,6 +144,7 @@ function Header() {
   const navigate = useNavigate();
   const onValid = (data: IForm) => {
     navigate(`/search?keyword=${data.keyword}`);
+    window.location.reload();
   };
 
   return (
