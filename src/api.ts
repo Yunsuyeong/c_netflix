@@ -20,6 +20,7 @@ export interface IGetMoviesResult {
   results: IMovie[];
   total_pages: number;
   total_results: number;
+  keyword: string;
 }
 
 interface ITv {
@@ -41,6 +42,7 @@ export interface IGetTvsResult {
   results: ITv[];
   total_pages: number;
   total_results: number;
+  keyword: string;
 }
 
 export function getMovies() {
@@ -77,4 +79,16 @@ export function getRatedTvs() {
   return fetch(`${BASE_PATH}/tv/top_rated?api_key=${API_KEY}`).then(
     (response) => response.json()
   );
+}
+
+export function getSearchMovie(keyword: string) {
+  return fetch(
+    `${BASE_PATH}/search/movie?api_key=${API_KEY}&query=${keyword}`
+  ).then((response) => response.json());
+}
+
+export function getSearchTv(keyword: string) {
+  return fetch(
+    `${BASE_PATH}/search/tv?api_key=${API_KEY}&query=${keyword}`
+  ).then((response) => response.json());
 }
