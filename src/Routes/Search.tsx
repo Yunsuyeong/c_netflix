@@ -61,6 +61,10 @@ const Row = styled(motion.div)`
   position: absolute;
   width: 100%;
   padding: 10px 100px;
+
+  @media screen and (max-width: 640px) {
+    gap: 10px;
+  }
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
@@ -91,6 +95,10 @@ const Info = styled(motion.div)`
   h4 {
     text-align: center;
     font-size: 20px;
+
+    @media screen and (max-width: 640px) {
+      font-size: 12px;
+    }
   }
 `;
 
@@ -120,6 +128,10 @@ const BigCover = styled.div`
   background-size: cover;
   background-position: center center;
   height: 400px;
+
+  @media screen and (max-width: 640px) {
+    height: 300px;
+  }
 `;
 
 const BigTitle = styled.h3`
@@ -128,6 +140,10 @@ const BigTitle = styled.h3`
   color: ${(props) => props.theme.white.lighter};
   font-size: 32px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 20px;
+  }
 `;
 
 const BigOverview = styled.p`
@@ -136,6 +152,10 @@ const BigOverview = styled.p`
   color: ${(props) => props.theme.white.lighter};
   font-size: 16px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 12px;
+  }
 `;
 
 const Bigdate = styled.p`
@@ -144,6 +164,10 @@ const Bigdate = styled.p`
   color: ${(props) => props.theme.white.lighter};
   font-size: 20px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 16px;
+  }
 `;
 
 const Bigscore = styled.p`
@@ -152,6 +176,10 @@ const Bigscore = styled.p`
   color: ${(props) => props.theme.white.lighter};
   font-size: 16px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 12px;
+  }
 `;
 
 const rowVariants = {

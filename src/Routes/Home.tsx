@@ -33,27 +33,49 @@ const Banner = styled.div<{ bgPhoto: string }>`
 
 const Title = styled.h2`
   font-size: 72px;
-  width: 50%;
+  width: 75%;
+
+  @media screen and (max-width: 640px) {
+    font-size: 36px;
+    width: 100%;
+  }
 `;
 
 const Overview = styled.p`
   font-size: 36px;
-  width: 50%;
+  width: 75%;
+
+  @media screen and (max-width: 640px) {
+    font-size: 18px;
+    width: 100%;
+  }
 `;
 
 const Slider1 = styled.div`
   position: relative;
   top: -100px;
+
+  @media screen and (max-width: 640px) {
+    top: 270px;
+  }
 `;
 
 const Slider2 = styled.div`
   position: relative;
   top: -330px;
+
+  @media screen and (max-width: 640px) {
+    top: -190px;
+  }
 `;
 
 const Slider3 = styled.div`
   position: relative;
   top: -560px;
+
+  @media screen and (max-width: 640px) {
+    top: -650px;
+  }
 `;
 
 const SliderCon = styled.div`
@@ -73,6 +95,12 @@ const Row = styled(motion.div)`
   grid-template-columns: repeat(6, 1fr);
   position: absolute;
   width: 100%;
+  padding: 10px;
+
+  @media screen and (max-width: 640px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
@@ -103,6 +131,10 @@ const Info = styled(motion.div)`
   h4 {
     text-align: center;
     font-size: 20px;
+
+    @media screen and (max-width: 640px) {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -125,6 +157,10 @@ const Bigbox = styled(motion.div)`
   margin: 0 auto;
   border-radius: 15px;
   overflow: hidden;
+
+  @media screen and (max-width: 640px) {
+    width: 60vw;
+  }
 `;
 
 const BigCover = styled.div`
@@ -132,6 +168,10 @@ const BigCover = styled.div`
   background-size: cover;
   background-position: center center;
   height: 400px;
+
+  @media screen and (max-width: 640px) {
+    height: 300px;
+  }
 `;
 
 const BigTitle = styled.h3`
@@ -140,6 +180,10 @@ const BigTitle = styled.h3`
   color: ${(props) => props.theme.white.lighter};
   font-size: 32px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 24px;
+  }
 `;
 
 const BigOverview = styled.p`
@@ -148,6 +192,10 @@ const BigOverview = styled.p`
   color: ${(props) => props.theme.white.lighter};
   font-size: 16px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 12px;
+  }
 `;
 
 const Bigdate = styled.p`
@@ -156,6 +204,10 @@ const Bigdate = styled.p`
   color: ${(props) => props.theme.white.lighter};
   font-size: 20px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 16px;
+  }
 `;
 
 const Bigscore = styled.p`
@@ -164,6 +216,10 @@ const Bigscore = styled.p`
   color: ${(props) => props.theme.white.lighter};
   font-size: 16px;
   padding: 20px;
+
+  @media screen and (max-width: 640px) {
+    font-size: 12px;
+  }
 `;
 
 const rowVariants = {
