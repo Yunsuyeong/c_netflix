@@ -4,8 +4,10 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import {
   getSearchMovie,
+  getSearchPeople,
   getSearchTv,
   IGetMoviesResult,
+  IGetPeopleResult,
   IGetTvsResult,
 } from "../api";
 import { makeImagePath } from "../utils";
@@ -217,7 +219,6 @@ const number = 3;
 function Search() {
   const [searchParams, _] = useSearchParams();
   const keyword = searchParams.get("keyword");
-  console.log(keyword);
   const navigate = useNavigate();
   const movieMatch = useMatch("/search/:movieId");
   const tvMatch = useMatch("/search/:tvId");
@@ -306,7 +307,9 @@ function Search() {
                       onClick={() => onTvClick(tv.id)}
                     >
                       <Info variants={infoVariant}>
-                        <h4>{tv.name}</h4>
+                        <h4>
+                          {tv.name} ({tv.original_name})
+                        </h4>
                       </Info>
                     </Box>
                   ))}
@@ -341,7 +344,9 @@ function Search() {
                       onClick={() => onMovieClick(movie.id)}
                     >
                       <Info variants={infoVariant}>
-                        <h4>{movie.title}</h4>
+                        <h4>
+                          {movie.title} ({movie.original_title})
+                        </h4>
                       </Info>
                     </Box>
                   ))}
@@ -349,7 +354,7 @@ function Search() {
             </AnimatePresence>
           </Slider1>
           <AnimatePresence>
-            {tvMatch ? (
+            {tvMatch || movieMatch ? (
               <>
                 <Overlay
                   onClick={onOverlayClick}
@@ -358,7 +363,7 @@ function Search() {
                 />
                 <Bigbox
                   style={{ top: scrollY.get() + 100 }}
-                  layoutId={tvMatch.params.tvId}
+                  layoutId={tvMatch?.params.tvId || movieMatch?.params.movieId}
                 >
                   {clickedTv && (
                     <>
@@ -390,7 +395,7 @@ function Search() {
                       />
                       <BigTitle>{clickedMovie.title}</BigTitle>
                       <Bigdate>
-                        First Airing Date : {clickedMovie?.release_date}
+                        Release Date: {clickedMovie?.release_date}
                       </Bigdate>
                       <BigOverview>{clickedMovie.overview}</BigOverview>
                       <Bigscore>Score : {clickedMovie?.vote_average}</Bigscore>

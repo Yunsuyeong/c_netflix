@@ -6,6 +6,7 @@ interface IMovie {
   backdrop_path: string;
   poster_path: string;
   title: string;
+  original_title: string;
   overview: string;
   release_date: string;
   vote_average: number;
@@ -28,6 +29,7 @@ interface ITv {
   backdrop_path: string;
   poster_path: string;
   name: string;
+  original_name: string;
   overview: string;
   first_air_date: string;
   vote_average: number;
@@ -40,6 +42,29 @@ export interface IGetTvsResult {
   };
   page: number;
   results: ITv[];
+  total_pages: number;
+  total_results: number;
+  keyword: string;
+}
+
+export interface IPeople {
+  id: number;
+  backdrop_path: string;
+  poster_path: string;
+  title: string;
+  original_title: string;
+  overview: string;
+  release_date: string;
+  vote_average: number;
+}
+
+export interface IGetPeopleResult {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: IPeople[];
   total_pages: number;
   total_results: number;
   keyword: string;
@@ -90,5 +115,11 @@ export function getSearchMovie(keyword: string) {
 export function getSearchTv(keyword: string) {
   return fetch(
     `${BASE_PATH}/search/tv?api_key=${API_KEY}&query=${keyword}`
+  ).then((response) => response.json());
+}
+
+export function getSearchPeople(keyword: string) {
+  return fetch(
+    `${BASE_PATH}/search/person?api_key=${API_KEY}&query=${keyword}`
   ).then((response) => response.json());
 }
