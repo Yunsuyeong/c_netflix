@@ -117,9 +117,3 @@ export function getSearchTv(keyword: string) {
     `${BASE_PATH}/search/tv?api_key=${API_KEY}&query=${keyword}`
   ).then((response) => response.json());
 }
-
-export function getSearchPeople(keyword: string) {
-  return fetch(
-    `${BASE_PATH}/search/person?api_key=${API_KEY}&query=${keyword}`
-  ).then((response) => response.json());
-}

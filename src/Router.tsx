@@ -10,6 +10,10 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
+        path: `${process.env.PUBLIC_URL}/`,
+        element: <Home />,
+      },
+      {
         path: "/",
         element: <Home />,
       },

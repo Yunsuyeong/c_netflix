@@ -4,10 +4,8 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import {
   getSearchMovie,
-  getSearchPeople,
   getSearchTv,
   IGetMoviesResult,
-  IGetPeopleResult,
   IGetTvsResult,
 } from "../api";
 import { makeImagePath } from "../utils";
